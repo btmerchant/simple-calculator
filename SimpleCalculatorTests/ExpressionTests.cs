@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SimpleCalculator.Properties;
+using SimpleCalculator;
+using System.Collections.Generic;
 
 namespace SimpleCalculator.Tests
 {
@@ -10,19 +11,19 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void TermsEnsureICanCreateAnInstance()
         {
-            ExtractTerms my_terms = new ExtractTerms();
+            Expression my_terms = new Expression();
             Assert.IsNotNull(my_terms);
         }
 
         [TestMethod]
         public void TermsProveICanExtractTerms()
         {
-            //ParseInput my_terms = new ParseInput();
+           Expression my_terms = new Expression();
 
-            //int Actual = my_terms.EvaluateExpression("5 + 10");
-            int Expected = 15;
+           int[] Actual = my_terms.ExtractTerms("5 + 1");
+           int[] Expected = new int[2] { 5, 1 };
 
-           // Assert.AreEqual(Expected, Actual);
+           Assert.AreSame(Expected, Actual);
         }
     }
 }
