@@ -18,12 +18,12 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void TermsProveICanExtractTerms()
         {
-           Expression my_terms = new Expression();
+            Expression my_terms = new Expression();
 
-           int[] Actual = my_terms.ExtractTerms("5 + 1");
-           int[] Expected = new int[2] { 5, 1 };
+            int[] Actual = my_terms.ExtractTerms("5 + 1");
+            int[] Expected = new int[2] { 5, 1 };
 
-           Assert.AreSame(Expected, Actual);
+            CollectionAssert.AreEqual(Expected, Actual);
         }
     }
 }
