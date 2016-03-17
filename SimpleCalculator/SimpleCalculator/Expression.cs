@@ -115,11 +115,13 @@ namespace SimpleCalculator
             return inputString; 
         }
 
+       
+
         public int calculate(int[] terms, string[] ops)
         {
             int result = 0;
             try
-            {                
+            {                         
                 int a = (terms[0]);
                 int b = (terms[1]);
                 string c = (ops[0]);
@@ -142,6 +144,49 @@ namespace SimpleCalculator
             }
             count++;
             return result;
+        }
+    }
+
+    public class Calc
+    {
+        public int add(int[] terms)
+        {
+            int a = (terms[0]);
+            int b = (terms[1]);
+            int result;
+            return result = a + b;
+        }
+
+        public int sub(int[] terms)
+        {
+            int a = (terms[0]);
+            int b = (terms[1]);
+            int result;
+            return result = a - b;
+        }
+
+        public int mult(int[] terms)
+        {
+            int a = (terms[0]);
+            int b = (terms[1]);
+            int result;
+            return result = a * b;
+        }
+
+        public int div(int[] terms)
+        {
+            int a = (terms[0]);
+            int b = (terms[1]);
+            int result;
+            return result = a / b;
+        }
+
+        public int mod(int[] terms)
+        {
+            int a = (terms[0]);
+            int b = (terms[1]);
+            int result;
+            return result = a % b;
         }
     }
 }

@@ -52,5 +52,71 @@ namespace SimpleCalculator.Tests
 
             string[] Actual = my_terms.ExtractOps("+++");
         }
+
+        [TestMethod]
+        public void TermsProveICanAddTerms()
+        {
+            Expression my_adder = new Expression();
+            int[] x = my_adder.ExtractTerms("5+5");
+            Calc my_calc = new Calc();
+
+            int Actual = my_calc.add(x);
+            int Expected = 10;
+
+            Assert.AreEqual(Expected, Actual);
+        }
+
+        [TestMethod]
+        public void TermsProveICanSubtractTerms()
+        {
+            Expression my_adder = new Expression();
+            int[] x = my_adder.ExtractTerms("5-2");
+            Calc my_calc = new Calc();
+
+            int Actual = my_calc.sub(x);
+            int Expected = 3;
+
+            Assert.AreEqual(Expected, Actual);
+        }
+
+        [TestMethod]
+        public void TermsProveICanMultiplyTerms()
+        {
+            Expression my_adder = new Expression();
+            int[] x = my_adder.ExtractTerms("3*5");
+            Calc my_calc = new Calc();
+
+            int Actual = my_calc.mult(x);
+            int Expected = 15;
+
+            Assert.AreEqual(Expected, Actual);
+        }
+
+        [TestMethod]
+        public void TermsProveICanDevideTerms()
+        {
+            Expression my_adder = new Expression();
+            int[] x = my_adder.ExtractTerms("10/2");
+            Calc my_calc = new Calc();
+
+            int Actual = my_calc.div(x);
+            int Expected = 5;
+
+            Assert.AreEqual(Expected, Actual);
+        }
+
+        [TestMethod]
+        public void TermsProveICanGetRemainderFromTerms()
+        {
+            Expression my_adder = new Expression();
+            int[] x = my_adder.ExtractTerms("7%5");
+            Calc my_calc = new Calc();
+
+            int Actual = my_calc.mod(x);
+            int Expected = 2;
+
+            Assert.AreEqual(Expected, Actual);
+        }
+
     }
 }
