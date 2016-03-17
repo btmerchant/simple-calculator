@@ -21,9 +21,36 @@ namespace SimpleCalculator.Tests
             Expression my_terms = new Expression();
 
             int[] Actual = my_terms.ExtractTerms("5 + 1");
-            int[] Expected = new int[2] { 5, 1 };
+            int[] Expected = new int[3] { 5, 1, 1 };
 
             CollectionAssert.AreEqual(Expected, Actual);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void BadTermOneTermTest()
+        {
+            Expression my_terms = new Expression();
+
+            int[] Actual = my_terms.ExtractTerms("5");
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void BadTermTooManyTermsTest()
+        {
+            Expression my_terms = new Expression();
+
+            int[] Actual = my_terms.ExtractTerms("537");
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void BadTermNoTermsTest()
+        {
+            Expression my_terms = new Expression();
+
+            string[] Actual = my_terms.ExtractOps("+++");
         }
     }
 }

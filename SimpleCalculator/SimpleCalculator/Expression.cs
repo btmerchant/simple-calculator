@@ -7,23 +7,32 @@ using System.Threading.Tasks;
 
 namespace SimpleCalculator
 {
+    //class CustomException : Exception
+    //{
+    //    public CustomException(string message)
+    //    {
+
+    //    }
+    // }
     public class Expression
     {
         public int count = 1;
-        public int[] terms = new int[2] { 0, 0 };
+        public int[] terms = new int[3] { 0, 0, 0 }; //contains term1 term2 & success bool(1=good, 0=bad)
+        public string[] ops = new string[2] { "", "" }; // contains operator & sucess bool ("1"=good "0"=bad)
         //public static int[] terms;
         public char op = '\n';
         public int step = 0; // counts the steps to build the expression (used to verify correct sequence T+O+T)
 
         public void EvaluateExpression(string expr)
-        {          
+        {     
             terms = ExtractTerms(expr);
-            op = ExtractOps(expr);
+            ops = ExtractOps(expr);
         }
 
         public int[] ExtractTerms(string expr)
         {
-            int[] termsLocal = new int[2] { 0, 0 };
+            if(expr.Length < 3) { throw new ArgumentException("Not enough expression elements"); }
+            int[] termsLocal = new int[3] { 0, 0, 0 };
             string exprIn = expr.Replace(" ", "");
             int i = 0;
             int x = 0;
@@ -36,11 +45,12 @@ namespace SimpleCalculator
                 {
                     if (step == 2)
                     {
-                        Console.WriteLine("Incorrect input, Good input example = 3+5 4*2 etc");
-                        Console.WriteLine("Please press enter and try again");
-                        Console.ReadKey();
-                        step = 0;
-                        GetUserInput();
+                        termsLocal[2] = 0; // signal bad term extraction
+                        throw new ArgumentException("Bad Term Error");
+                    }
+                    else
+                    {
+                        termsLocal[2] = 1; // signal good term extraction
                     }
                     termTemp = termTemp + l;
                     termsLocal[x] = l - 48;
@@ -54,9 +64,9 @@ namespace SimpleCalculator
             return termsLocal;
         }
 
-        public char ExtractOps(string expr)
+        public string[] ExtractOps(string expr)
         {
-            char opsLocal = '\n';
+            string[] opsLocal = new string[2] {"", "" };
             string exprIn = expr.Replace(" ", "");
             int i = 0;
             int y = 0;
@@ -65,18 +75,19 @@ namespace SimpleCalculator
             while (i < exprIn.Length)
             {
                 char l = exprIn[i];
-                if (l == '+' || l == '-' || l == '/' || l == '*')    // catch the ops
+                if (l == '+' || l == '-' || l == '/' || l == '*' || l == '%')    // catch the ops
                 {
-                    if (step != 2)
+                    if (step != 2) // error trap
                     {
-                        Console.WriteLine("Incorrect input, Good input example = 3+5 4*2 etc");
-                        Console.WriteLine("Please press enter and try again");
-                        Console.ReadKey();
-                        step = 0;
-                        GetUserInput();
+                        opsLocal[1] = "0";
+                        throw new ArgumentException("Bad Operator Error");
+                    }
+                    else
+                    {
+                        opsLocal[1] = "1";
                     }
                     opTemp = opTemp + l;
-                    opsLocal = l;
+                    opsLocal[y] = l.ToString();
                     y++;
                     opTemp = "";
                 }
@@ -102,6 +113,35 @@ namespace SimpleCalculator
             Console.WriteLine("-------");
             //Console.ReadKey();
             return inputString; 
+        }
+
+        public int calculate(int[] terms, string[] ops)
+        {
+            int result = 0;
+            try
+            {                
+                int a = (terms[0]);
+                int b = (terms[1]);
+                string c = (ops[0]);
+                //char[] d = c.ToCharArray();
+                //char o = c[0];
+                if (c == "+") { result = a + b; }
+                else if (c == "-") { result = a - b; }
+                else if (c == "/") { result = a / b; }
+                else if (c == "*") { result = a * b; }
+                else if (c == "%") { result = a % b; }
+                else Console.WriteLine("No good operator input!");
+                Console.Write(" =  ");
+                Console.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadKey();
+                throw;
+            }
+            count++;
+            return result;
         }
     }
 }
