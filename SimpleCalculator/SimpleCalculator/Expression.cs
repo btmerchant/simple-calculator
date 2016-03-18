@@ -7,13 +7,40 @@ using System.Threading.Tasks;
 
 namespace SimpleCalculator
 {
-    //class CustomException : Exception
-    //{
-    //    public CustomException(string message)
-    //    {
 
-    //    }
-    // }
+    public class CalcStack // stk data format = question answer (ex. 3+1 4)
+    {
+        Stack<string> stk = new Stack<string>();
+        private string last = "";
+        private string lastq = "";
+
+        public string lastqAccess
+        {
+            get { return lastq; }
+            set { lastq = value; }
+        }
+
+        public string lastAccess
+        {
+            get { return last; }
+            set { last = value; }
+        }
+
+        public void pushStack()
+        {
+            string stackSet = lastq + " " + last;
+            stk.Push(stackSet);         
+        }
+
+        public void peekStack()
+        {
+            string lastQuestion = stk.Peek();
+            string[] lastQuestionArray = lastQuestion.Split(' ');
+            lastq = lastQuestionArray[0];
+            last = lastQuestionArray[1];
+        }
+    }
+
     public class Expression
     {
         public int count = 1;
@@ -115,8 +142,6 @@ namespace SimpleCalculator
             return inputString; 
         }
 
-       
-
         public int calculate(int[] terms, string[] ops)
         {
             int result = 0;
@@ -189,4 +214,7 @@ namespace SimpleCalculator
             return result = a % b;
         }
     }
+
+    
+
 }

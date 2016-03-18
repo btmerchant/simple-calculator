@@ -96,11 +96,11 @@ namespace SimpleCalculator.Tests
         public void TermsProveICanDevideTerms()
         {
             Expression my_adder = new Expression();
-            int[] x = my_adder.ExtractTerms("10/2");
+            int[] x = my_adder.ExtractTerms("4/2");
             Calc my_calc = new Calc();
 
             int Actual = my_calc.div(x);
-            int Expected = 5;
+            int Expected = 2;
 
             Assert.AreEqual(Expected, Actual);
         }
@@ -117,6 +117,10 @@ namespace SimpleCalculator.Tests
 
             Assert.AreEqual(Expected, Actual);
         }
+        [TestMethod]
+        public void MyTestMethod()
+        {
 
+        }
     }
 }
