@@ -118,9 +118,37 @@ namespace SimpleCalculator.Tests
             Assert.AreEqual(Expected, Actual);
         }
         [TestMethod]
-        public void MyTestMethod()
+        public void StackProveICanSetLastqAndLast()
         {
+            CalcStack scStack = new CalcStack();
+            scStack.lastqAccess = "5+3";
+            scStack.lastAccess = "8";
+            scStack.pushStack();
+            scStack.peekStack();
 
+            string lstq = scStack.lastqAccess;
+            string lst = scStack.lastAccess;
+            string Actual = lstq + " " + lst;
+            string Expected = "5+3 8";
+
+            Assert.AreEqual(Actual, Expected);
+        }
+
+        [TestMethod]
+        public void ProveThatEvaluteCanAccessTheStackWithLastqAndLast()
+        {
+            Expression scExpr = new Expression();
+            CalcStack scStack = new CalcStack();
+            scStack.lastqAccess = "5+3";
+            scStack.pushStack();
+            scStack.peekStack();
+
+            scExpr.EvaluateExpression(scStack.lastqAccess);
+            scStack.peekStack();
+            string Expected = scStack.lastqAccess + " " + scStack.lastAccess;
+            string Actual = "5+3 8";
+
+            Assert.AreEqual(Actual, Expected);
         }
     }
 }
