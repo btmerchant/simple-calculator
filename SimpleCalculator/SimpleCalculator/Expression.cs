@@ -7,9 +7,36 @@ using System.Threading.Tasks;
 
 namespace SimpleCalculator
 {
-
-    public class CalcStack // stk data format = question answer (ex. 3+1 4)
+    public class Stack // stk data format = question answer (ex. 3+1 4)
     {
+        public static  Dictionary<char, int> Constants = new Dictionary<char, int>();
+
+        public void addConstant(char C, int I)
+        {
+            try
+            {
+                Constants.Add(C, I);                
+            }
+            catch (Exception)
+            {
+                throw;
+            }           
+        }
+
+        public int getConstant(char C)
+        {
+            int value = 0;
+            if(Constants.TryGetValue(C, out value))
+            {
+                return value;
+            }
+            else
+            {
+                return 0;
+            }
+            
+        }
+
         Stack<string> stk = new Stack<string>();
         private string last = "";
         private string lastq = "";

@@ -12,7 +12,7 @@ namespace SimpleCalculator
         static void Main(string[] args)
         {
             Expression cExp = new Expression();
-            CalcStack scStack = new CalcStack();
+            Stack scStack = new Stack();
             string inputString = cExp.GetUserInput();
             cExp.EvaluateExpression(inputString);
             int result = cExp.calculate(cExp.terms, cExp.ops);

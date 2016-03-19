@@ -120,7 +120,7 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void StackProveICanSetLastqAndLast()
         {
-            CalcStack scStack = new CalcStack();
+            Stack scStack = new Stack();
             scStack.lastqAccess = "5+3";
             scStack.lastAccess = "8";
             scStack.pushStack();
@@ -138,15 +138,69 @@ namespace SimpleCalculator.Tests
         public void ProveThatEvaluteCanAccessTheStackWithLastqAndLast()
         {
             Expression scExpr = new Expression();
-            CalcStack scStack = new CalcStack();
+            Stack scStack = new Stack();
             scStack.lastqAccess = "5+3";
             scStack.pushStack();
             scStack.peekStack();
-
             scExpr.EvaluateExpression(scStack.lastqAccess);
+            int result = scExpr.calculate(scExpr.terms, scExpr.ops);
+            scStack.lastAccess = result.ToString();
+            scStack.pushStack();
             scStack.peekStack();
             string Expected = scStack.lastqAccess + " " + scStack.lastAccess;
             string Actual = "5+3 8";
+
+            Assert.AreEqual(Actual, Expected);
+        }
+
+        [TestMethod]
+        public void ProveICanUseAConstantAsInputExpression()
+        {
+            Expression scExpr = new Expression();
+            Stack scStack = new Stack();
+            scStack.addConstant('a', 5);
+            scStack.addConstant('b', 2);
+            scStack.lastqAccess = scStack.getConstant('a').ToString() + '+' + scStack.getConstant('b').ToString();
+            scStack.pushStack();
+            scStack.peekStack();
+            scExpr.EvaluateExpression(scStack.lastqAccess);
+            int result = scExpr.calculate(scExpr.terms, scExpr.ops);
+            scStack.lastAccess = result.ToString();
+            scStack.pushStack();
+            scStack.peekStack();
+            string Expected = scStack.lastqAccess + " " + scStack.lastAccess;
+            string Actual = "5+2 7";
+
+            Assert.AreEqual(Actual, Expected);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void ProveThatAConstantCanOnlyBeDefinedOnce()
+        {
+            Expression scExpr = new Expression();
+            Stack scStack = new Stack();
+            scStack.addConstant('a', 5);
+            scStack.addConstant('a', 5);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void ProveThatAnUndefinedConstantCanNotBeUsed()
+        {
+            Expression scExpr = new Expression();
+            Stack scStack = new Stack();
+            scStack.addConstant('a', 5);
+            scStack.lastqAccess = scStack.getConstant('a').ToString() + '+' + scStack.getConstant('b').ToString();
+            scStack.pushStack();
+            scStack.peekStack();
+            scExpr.EvaluateExpression(scStack.lastqAccess);
+            int result = scExpr.calculate(scExpr.terms, scExpr.ops);
+            scStack.lastAccess = result.ToString();
+            scStack.pushStack();
+            scStack.peekStack();
+            string Expected = scStack.lastqAccess + " " + scStack.lastAccess;
+            string Actual = "5+2 7";
 
             Assert.AreEqual(Actual, Expected);
         }
